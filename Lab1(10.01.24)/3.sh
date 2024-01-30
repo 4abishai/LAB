@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 echo "Enter the distance in centimeters: "
 read distance_cm
 
