@@ -9,13 +9,13 @@ do
     flag=1
     for ((j=2; j<=$i/2 & $flag; j++))
     do
-        if [[ $((i%j)) -eq 0 ]]
+        if (( i%j == 0 ))
         then
             flag=0
         fi
     done
 
-    if [[ $flag -eq 1 ]]
+    if (( flag == 1 ))
     then
         echo -n "$i "
     fi   
