@@ -1,6 +1,7 @@
 #!/bin/bash
 
-read -p "Enter elements: " -a Name
+echo -n "Enter elements: "
+read -a Name
 
 for ((i=0; i < ${#Name[@]}; i++))
 do 
