@@ -1,4 +1,4 @@
-To execute a Bash script named `script.sh` from the command line, type:
+To execute a Bash script named `Script_Name.sh` from the command line, type:
 
 ```bash
 bash Script_Name.sh
