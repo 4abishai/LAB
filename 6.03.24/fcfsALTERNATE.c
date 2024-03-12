@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
+// #include <stdlib.h>
 
 #define MAX_PROCESS 100
 
@@ -45,11 +45,13 @@ void sortProcessList(int n)
 
 void calculateProcessDetails(int n)
 {
+    // initialize the variable c with the arrival time of the first process
     int c = process[0].atime;
     for (int i = 0; i < n; i++)
     {
+        // completion time as sum of current time and burst time of current process
         process[i].ct = c + process[i].btime;
-        c = process[i].ct;
+        c = process[i].ct; // update current time
         process[i].tat = process[i].ct - process[i].atime;
         process[i].wt = process[i].tat - process[i].btime;
     }
@@ -62,7 +64,8 @@ void displayFinalTable(int n)
 
     for (int i = 0; i < n; i++)
     {
-        printf("%d\t\t%d\t\t%d\t\t%d\t\t%d\n", process[i].p, process[i].atime, process[i].btime, process[i].wt, process[i].tat);
+        printf("%d\t\t%d\t\t\t%d\t\t%d\t\t%d\n", process[i].p, process[i].atime,
+               process[i].btime, process[i].wt, process[i].tat);
     }
 }
 
