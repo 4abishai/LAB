@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <limits.h>
-
 #define MAX 50
 
 struct process
@@ -63,6 +62,7 @@ void preemptive_sjf()
         }
 
         p[min].rt--; // Process available -> reduce rt
+        cur_time++;
 
         if (p[min].rt == 0) // process has completed execution
         {
@@ -71,7 +71,6 @@ void preemptive_sjf()
             p[min].finished = 1;
             completed++; // Increment the count of completed processes
         }
-        cur_time++;
     }
 }
 
@@ -92,30 +91,30 @@ void display()
 
 int main()
 {
-    // n = 5;
-    // struct process arr[] = {{1, 2, 6}, {2, 5, 2}, {3, 1, 8}, {4, 0, 3}, {5, 4, 4}};
-
-    // for (int i = 0; i < n; i++)
-    // {
-    //     p[i].pid = arr[i].pid;
-    //     p[i].at = arr[i].at;
-    //     p[i].bt = arr[i].bt;
-
-    //     p[i].rt = p[i].bt;
-    //     p[i].finished = 0;
-    // }
-
-    printf("Enter number of processes: ");
-    scanf("%d", &n);
+    n = 5;
+    struct process arr[] = {{1, 2, 6}, {2, 5, 2}, {3, 1, 8}, {4, 0, 3}, {5, 4, 4}};
 
     for (int i = 0; i < n; i++)
     {
-        printf("Enter Arrival Time and Burst Time for Process P%d: ", i + 1);
-        scanf("%d %d", &p[i].at, &p[i].bt);
-        p[i].pid = i + 1;
+        p[i].pid = arr[i].pid;
+        p[i].at = arr[i].at;
+        p[i].bt = arr[i].bt;
+
         p[i].rt = p[i].bt;
         p[i].finished = 0;
     }
+
+    // printf("Enter number of processes: ");
+    // scanf("%d", &n);
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     printf("Enter Arrival Time and Burst Time for Process P%d: ", i + 1);
+    //     scanf("%d %d", &p[i].at, &p[i].bt);
+    //     p[i].pid = i + 1;
+    //     p[i].rt = p[i].bt;
+    //     p[i].finished = 0;
+    // }
 
     sort_by_arrival_time();
     preemptive_sjf();

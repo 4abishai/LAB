@@ -56,31 +56,31 @@ void display_result()
 int main()
 {
 
-    // n = 4, q = 6;
-    // struct process arr[] = {{1, 0, 8}, {2, 1, 5}, {3, 2, 10}, {4, 3, 11}};
-
-    // for (int i = 0; i < n; i++)
-    // {
-    //     p[i].pid = arr[i].pid;
-    //     p[i].at = arr[i].at;
-    //     p[i].bt = arr[i].bt;
-
-    //     p[i].rt = p[i].bt;
-    // }
-
-    printf("Enter the number of processes: ");
-    scanf("%d", &n);
-
-    printf("Enter time quantum for Round Robin: ");
-    scanf("%d", &q);
+    n = 4, q = 6;
+    struct process arr[] = {{1, 0, 8}, {2, 1, 5}, {3, 2, 10}, {4, 3, 11}};
 
     for (int i = 0; i < n; i++)
     {
-        printf("Enter Arrival Time and Burst Time for Process P%d: ", i + 1);
-        scanf("%d %d", &p[i].at, &p[i].bt);
-        p[i].pid = i + 1;
+        p[i].pid = arr[i].pid;
+        p[i].at = arr[i].at;
+        p[i].bt = arr[i].bt;
+
         p[i].rt = p[i].bt;
     }
+
+    // printf("Enter the number of processes: ");
+    // scanf("%d", &n);
+
+    // printf("Enter time quantum for Round Robin: ");
+    // scanf("%d", &q);
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     printf("Enter Arrival Time and Burst Time for Process P%d: ", i + 1);
+    //     scanf("%d %d", &p[i].at, &p[i].bt);
+    //     p[i].pid = i + 1;
+    //     p[i].rt = p[i].bt;
+    // }
 
     round_robin();
     display_result();
