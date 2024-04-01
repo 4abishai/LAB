@@ -14,7 +14,7 @@ void create_process_tree(int max_depth)
         }
         else
         {
-            wait(NULL); // makes the parent process to wait for the child process to finish
+            wait(NULL); // makes the parent process wait for the child process to finish
         }
     }
 }
