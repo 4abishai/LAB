@@ -5,16 +5,16 @@
 
 int is_safe(int alloc[][R], int max[][R], int avail[])
 {
+    int need[P][R];
+    for (int i = 0; i < P; i++)
+        for (int j = 0; j < R; j++)
+            need[i][j] = max[i][j] - alloc[i][j]; // Calculate the need for each process
+
     int finish[P]; // Array to track if a process is finished
     for (int i = 0; i < P; i++)
         finish[i] = 0;
 
     int SafeSequence[P], idx = 0; // Array to store the safe sequence and current index
-
-    int need[P][R];
-    for (int i = 0; i < P; i++)
-        for (int j = 0; j < R; j++)
-            need[i][j] = max[i][j] - alloc[i][j]; // Calculate the need for each process
 
     int count = 0;
     while (count < P) // Try to find a safe sequence
@@ -26,7 +26,7 @@ int is_safe(int alloc[][R], int max[][R], int avail[])
                 int can_execute = 1;        // Assume P(i) can be allocated resources it needs
                 for (int j = 0; j < R; j++) // Check if all resources for  i are avail
                 {
-                    if (need[i][j] > avail[j])
+                    if (need[i][j] > avail[j]) // process can only execute if need[i][j] <= avail[j]
                     {
                         can_execute = 0; // flag set to false if for any R(j) need(i) is not met
                         break;
@@ -35,9 +35,9 @@ int is_safe(int alloc[][R], int max[][R], int avail[])
 
                 if (can_execute)
                 {
-                    SafeSequence[idx++] = i; // Add process i to the safe sequence
-                    for (int y = 0; y < R; y++)
-                        avail[y] += alloc[i][y]; // Update avail resources
+                    for (int j = 0; j < R; j++)
+                        avail[j] += alloc[i][j]; // Update avail resources
+                    SafeSequence[idx++] = i;     // Add process i to the safe sequence
                     finish[i] = 1;               // Mark P(i) as finished
                     count++;                     // Increase count for finished process
                 }
@@ -48,7 +48,6 @@ int is_safe(int alloc[][R], int max[][R], int avail[])
     for (int i = 0; i < P; i++)
     {
         if (finish[i] == 0) // Process i is not finished
-
         {
             printf("The system is not in a safe state.\n");
             return 0;
@@ -74,35 +73,26 @@ int request_resource(int alloc[][R], int max[][R], int avail[], int process_num,
             need[i][j] = max[i][j] - alloc[i][j]; // Calculate the need for each process
 
     for (int i = 0; i < R; i++)
-    {
         if (request[i] > need[process_num][i] || request[i] > avail[i])
-        {
             return 0;
-        }
-    }
 
-    for (int i = 0; i < R; i++)
+    for (int i = 0; i < R; i++) // grant the request
     {
         avail[i] -= request[i];
-        alloc[process_num][i] += request[i];
         need[process_num][i] -= request[i];
+        alloc[process_num][i] += request[i];
     }
 
-    if (is_safe(alloc, max, avail))
-    {
+    if (is_safe(alloc, max, avail)) // If safe state then return 1
         return 1;
-    }
-    else
+    // Unsafe state
+    for (int i = 0; i < R; i++) // Undo the resource alloc
     {
-        // Undo the resource alloc
-        for (int i = 0; i < R; i++)
-        {
-            avail[i] += request[i];
-            alloc[process_num][i] -= request[i];
-            need[process_num][i] += request[i];
-        }
-        return 0;
+        avail[i] += request[i];
+        need[process_num][i] += request[i];
+        alloc[process_num][i] -= request[i];
     }
+    return 0;
 }
 
 int main()
