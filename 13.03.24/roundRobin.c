@@ -24,6 +24,7 @@ void round_robin()
         if (p[i].rt > 0 && p[i].at <= current_time)
         {
             int execution_time = (p[i].rt < q ? p[i].rt : q);
+
             p[i].rt -= execution_time;
             current_time += execution_time;
 
